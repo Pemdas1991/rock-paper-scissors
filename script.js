@@ -19,90 +19,107 @@ function computerPlay (){
     return(guess);
 }
 
-function playRound(upperPlayerSelection, computerSelection){
+function playRound(playerInput, computerSelection){
     let playerWin = false;
 
-    if (upperPlayerSelection === computerSelection) {
-        return `You both picked ${computerSelection}. Looks like a tie!` ;
-    };
+    if (playerInput === computerSelection) {
+        playerWin = "Tie" ;
+    }
     
-    if ((upperPlayerSelection === "PAPER") && (computerSelection === "ROCK")) {
+    else if ((playerInput === "PAPER") && (computerSelection === "ROCK")) {
         playerWin = true;
     }
     
-    else if ((upperPlayerSelection === "ROCK") && (computerSelection === "SCISSORS")) {
+    else if ((playerInput === "ROCK") && (computerSelection === "SCISSORS")) {
         playerWin = true;
     }
     
-    else if ((upperPlayerSelection === "SCISSORS") && (computerSelection === "PAPER")) {
+    else if ((playerInput === "SCISSORS") && (computerSelection === "PAPER")) {
         playerWin = true;
     };
 
 
-    if (playerWin) {
-        console.log(win(upperPlayerSelection, computerSelection));
-        return true;
-    }
-    else {
-        console.log(lose(upperPlayerSelection, computerSelection));
-        return false;
-    };
-
-    }
+    return(result(playerInput, computerSelection, playerWin));
+}
 
     
 
 function result (playerSelection, computerSelection, playerWin){
-    if (playerWin){
+    if (playerWin === "Tie"){
+        console.log(`You both picked ${computerSelection}. Looks like a Tie`)
+        return "Tie"
+    }
+    else if (playerWin){
         console.log(`${playerSelection} beats ${computerSelection}. You Win`);
-        return true;
+        return "Win";
     }
     else {
         console.log(`${computerSelection} beats ${playerSelection}. You Lose`);
-        return false;
+        return "Lose";
     };
 }
 
 
 function game () {
-    for (let i =0; i<5; i++){
-        let playerScore = 0;
-        let compScore = 0;
+    let playerScore = 0;
+    let compScore = 0;
 
-        let guess = getGuess(playerScore, compScore)
-
+    for (let i =1; i<6; i++){
         
+        let guess = getGuess(playerScore, compScore)
+        let playerWin = playRound(guess, computerPlay());
 
-    }
-}
+        if(playerWin === "Win"){
+            playerScore++;
+        }
+        if (playerWin === "Lose"){
+            compScore++;
+        };
+
+        if (playerScore >= 3) {
+            alert(`You win ${playerScore} to ${compScore}!`)
+            return;
+        };
+
+        if (compScore >= 3) {
+            alert(`Computer wins ${compScore} to ${playerScore}!`)
+            return;
+        };
+    };
+};
+
+
 
 
 function getGuess (pScore, cScore) {
-    let guess = prompt(`Score is ${pScore} to ${cScore}. Please enter Rock, Paper, or Scissors!`);
-    checkInput(guess);
-}
+    
+    let guess = prompt(`Score is ${pScore} to ${cScore}. Please enter Rock, Paper, or Scissors!`); 
+    let upperGuess = guess.toUpperCase();
+    if(!checkInput(upperGuess)){
+        console.log(`You typed ${guess}. Please try again with Rock, Paper, or Scissors!`)
+        return getGuess(pScore, cScore);
+    };
+    return upperGuess;
+};
 
 
-function checkInput (playerInput){
-    let upperPlayerSelection = playerInput.toUpperCase()
+function checkInput (playerInput, pScore, cScore){
+    
     let validInput = false;
 
-    switch (upperPlayerSelection){
-        case("ROCK"):
+    switch (true){
+        case(playerInput === "ROCK"):
             validInput = true;
             break;
-        case("PAPER"):
+        case(playerInput === "PAPER"):
             validInput = true;
             break;
-        case("Scissors"):
+        case(playerInput === "SCISSORS"):
             validInput = true;
             break;
-        default;
+        default:
             break;
     };
 
-    if (!validInput) {
-        console.log(`You typed ${playerInput}. Please try again with Rock, Paper, or Scissors!`)
-        getGuess();
-    }
+    return validInput;
 }
