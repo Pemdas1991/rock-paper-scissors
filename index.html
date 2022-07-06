@@ -1,13 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
+
 <body>
-    
+    <div class="container">
+        <div class="scoreBoard">
+            <Div class="scoreCard player">
+                <p>PLAYER</p>
+                <p class="pScore">0</p>
+            </Div>
+            <button class="restart">Restart</button>
+            <Div class="scoreCard computer">
+                <p>COMPUTER</p>
+                <p class="cScore">0</p>
+
+            </div>
+
+        </div>
+        <div class="game">
+            <Div class="results">Click a button below to start</Div>
+            <div>
+                <button data-guess="ROCK" class="guess">Rock</button>
+                <button data-guess="PAPER" class="guess">Paper</button>
+                <button data-guess="SCISSORS" class="guess">Scissors</button>
+            </div>
+
+        </div>
+
+    </div>
+
 </body>
+
 </html>
